@@ -1,0 +1,23 @@
+{
+  "name": "e2instanceserver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && copyfiles -u 1 src/public/* dist/",
+    "test": "jest",
+    "dev": "npx ts-node src/index",
+    "start": "npx ts-node src/index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^24.2.1"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.2"
+  }
+}
