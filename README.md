@@ -1,6 +1,7 @@
 # Overview
 
 This is a simple Node.js server setup using an AWS EC2 instance. In this project, we will go through how to set up an EC2 instance, secure it, access it, and finally test our Node.js server.
+Example port http://ec2-51-20-72-204.eu-north-1.compute.amazonaws.com:3000
 
 # Creating a EC2 Instance
 
@@ -32,13 +33,53 @@ This is a simple Node.js server setup using an AWS EC2 instance. In this project
 
 ## SSH Access (vs code)
 
-1. [Add Security Group Which allow "Inbound Rules" type:ssh port:22](#creating-a-security-group)
-2. [Edit ssh config file in vs code](#edit-ssh-config-file)
-3. Now you can connect to your EC2 instance using the command:
+1. [Add Security Group Which allow "Inbound Rules" type:ssh port:22 source:<Your IP>](#creating-a-security-group)
+2. [In Same group add type:"Custom TCP" port:"<Port you will use in express server(eg: 3000)> source:"0.0.0.0/0"](#creating-a-security-group)
+3. [Edit ssh config file in vs code](#edit-ssh-config-file)
+4. Now you can connect to your EC2 instance using the command:
 
    ```bash
    ssh my-ec2-instance
    ```
+
+## Running Express Server
+
+1. Create a Express Server
+
+```js
+import express from "express";
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Hello from EC2!");
+});
+//use port you allowed in security group
+app.listen(3000, "0.0.0.0", () => {
+  console.log("Server running on port 3000");
+});
+```
+
+2. SSH into your EC2 instance using the method described above.(Amazon Linux)
+3. Update the package manager:
+
+```bash
+  sudo yum update -y
+```
+
+3. Install node js
+
+```bash
+sudo yum install -y nodejs
+```
+
+4. Install git
+
+```bash
+sudo yum install git -y
+```
+
+5. Clone and Run you repo.
+6. Use URl: http://ec2-51-20-72-204.eu-north-1.compute.amazonaws.com:3000
 
 ### Creating a Security Group
 
