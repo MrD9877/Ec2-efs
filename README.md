@@ -85,13 +85,13 @@ sudo yum install git -y
 
 > 💡 **TIP:**  
 > Use pm2 to make production server run even when you exit ssh connection and for auto restart
-
-```bash
-sudo npm i -g pm2
-npm run build
-pm2 start dist/src/index.js
-pn2 log
-```
+>
+> ```bash
+> sudo npm i -g pm2
+> npm run build
+> pm2 start dist/src/index.js
+> pn2 log
+> ```
 
 6. Use URl: http://ec2-51-20-72-204.eu-north-1.compute.amazonaws.com:3000
 
