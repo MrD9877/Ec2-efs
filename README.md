@@ -42,9 +42,8 @@ Example port http://ec2-51-20-72-204.eu-north-1.compute.amazonaws.com:3000
    ssh my-ec2-instance
    ```
 
-[!TIP]
-
-If normal command not working like "npm i -g pm2" use "sudo npm i -g pm2"
+> 💡 **TIP:**  
+> If normal command not working like `npm i -g pm2` use `sudo npm i -g pm2`
 
 ## Running Express Server
 
@@ -84,8 +83,8 @@ sudo yum install git -y
 
 5. Clone and Run you repo.
 
-[!TIP]
-Use pm2 to make production server run even when you exit ssh connection and for auto restart
+> 💡 **TIP:**  
+> Use pm2 to make production server run even when you exit ssh connection and for auto restart
 
 ```bash
 sudo npm i -g pm2
