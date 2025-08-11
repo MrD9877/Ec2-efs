@@ -6,7 +6,7 @@
     "build": "tsc && copyfiles -u 1 src/public/* dist/",
     "test": "jest",
     "dev": "npx ts-node src/index",
-    "start": "npx ts-node src/index"
+    "start": "node dist/src/index"
   },
   "keywords": [],
   "author": "",
