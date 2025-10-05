@@ -147,11 +147,11 @@ This is a simple guide to set up and use Amazon Elastic File System (EFS) with a
 
 ## Mounting EFS to EC2 Instance
 
-> **⚠️ Important:** Add security rule to same Availability zone as Ec2
-> Add an Inbound Rule:
-> Type: NFS
-> Protocol: TCP
-> Port: 2049
+> **⚠️ Important:** Add security rule to same Availability zone as Ec2/
+> Add an Inbound Rule:/
+> Type: NFS/
+> Protocol: TCP/
+> Port: 2049/
 > Source: Select the Security Group of your EC2 instance.
 
 > **⚠️ Important:** use this command to give acces to modify EFS in EC2
