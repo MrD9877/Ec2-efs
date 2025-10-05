@@ -1,9 +1,11 @@
-# Overview
+# EC2
+
+## Overview
 
 This is a simple Node.js server setup using an AWS EC2 instance. In this project, we will go through how to set up an EC2 instance, secure it, access it, and finally test our Node.js server.
 Example port http://ec2-51-20-72-204.eu-north-1.compute.amazonaws.com:3000
 
-# Creating a EC2 Instance
+## Creating a EC2 Instance
 
 1. Go to AWS Management Console.
 2. Navigate to the EC2 Dashboard.
@@ -20,9 +22,9 @@ Example port http://ec2-51-20-72-204.eu-north-1.compute.amazonaws.com:3000
 11. Select or create a key pair for SSH access.
 12. Click "Launch Instances".
 
-# Accessing the EC2 Instance
+## Accessing the EC2 Instance
 
-## Browser Access
+### Browser Access
 
 1. Go to EC2=-->Instance-->(your instance)
 2. Click Connect
@@ -31,7 +33,7 @@ Example port http://ec2-51-20-72-204.eu-north-1.compute.amazonaws.com:3000
 5. Click Connect.
 6. You should now be connected to your EC2 instance via the browser.
 
-## SSH Access (vs code)
+### SSH Access (vs code)
 
 1. [Add Security Group Which allow "Inbound Rules" type:ssh port:22 source:<Your IP>](#creating-a-security-group)
 2. [In Same group add type:"Custom TCP" port:"<Port you will use in express server(eg: 3000)> source:"0.0.0.0/0"](#creating-a-security-group)
@@ -45,7 +47,7 @@ Example port http://ec2-51-20-72-204.eu-north-1.compute.amazonaws.com:3000
 > 💡 **TIP:**  
 > If normal command not working like `npm i -g pm2` use `sudo npm i -g pm2`
 
-## Running Express Server
+### Running Express Server
 
 1. Create a Express Server
 
@@ -127,3 +129,66 @@ sudo yum install git -y
    ```
 
 5. Save the file.
+
+# EFS
+
+## Overview
+
+This is a simple guide to set up and use Amazon Elastic File System (EFS) with an EC2 instance. EFS provides scalable file storage that can be shared across multiple EC2 instances.
+
+## Creating an EFS File System
+
+1. Go to AWS Management Console.
+2. Navigate to the EFS Dashboard.
+3. Click on "Create file system".
+4. Choose the VPC where your EC2 instance is located.
+5. Configure the file system settings (default settings are usually fine).
+6. Click "Create".
+
+## Mounting EFS to EC2 Instance
+
+> **⚠️ Important:** Add security rule to same Availability zone as Ec2
+> Add an Inbound Rule:
+> Type: NFS
+> Protocol: TCP
+> Port: 2049
+> Source: Select the Security Group of your EC2 instance.
+
+> **⚠️ Important:** use this command to give acces to modify EFS in EC2
+>
+> ```bash
+> sudo chown -R ec2-user:ec2-user /home/ec2-user/fs/efs
+> ```
+
+1. SSH into your EC2 instance using the method described above.
+2. Install the NFS client:
+
+```bash
+sudo yum install -y nfs-utils
+```
+
+3. Create a directory to mount the EFS file system:
+
+```bash
+sudo mkdir /mnt/efs
+```
+
+4. Mount the EFS file system:
+
+```bash
+sudo mount -t nfs4 -o nfsvers=4.1 <file-system-id>.efs.<region>.amazonaws.com:/ /mnt/efs
+```
+
+Replace `<file-system-id>` with your EFS file system ID and `<region>` with the AWS region where your EFS is located. 5. Verify the mount:
+
+```bash
+df -h
+```
+
+You should see the EFS file system listed.
+
+6. To make the mount persistent across reboots, add the following line to your `/etc/fstab` file:
+
+```plaintext
+<file-system-id>.efs.<region>.amazonaws.com:/ /mnt/efs nfs4 defaults,_netdev 0 0
+```
